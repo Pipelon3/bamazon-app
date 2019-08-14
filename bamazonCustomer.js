@@ -13,9 +13,10 @@ connection.connect(function (err){
   if (err) throw err;
   connection.query("SELECT * FROM products", function (err, res) {
       if (err) throw err;
-     
-  });
-})
+     console.log(res)
+     mySystem();
+    });
+  })
 
 function mySystem() {
   inquirer    
@@ -24,7 +25,7 @@ function mySystem() {
               name: "item",
               type: "list",
               message: "What item would you like to select?",
-              choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+              choices: ["Xbox One", "Playstation 4", "Xbox 360", "Playstation 3", "Orange", "Grapes", "Apple", "Pulp Fiction", "Jurrasic Park", "Avatar", "The Room", "Twizzlers", "Skittles"]
           },
           {
               name:"quantity",
@@ -33,6 +34,8 @@ function mySystem() {
           }
       ]).then(function(answers) {
           updateDB(answers.item, answers.quantity);
+      }).catch(function(err) {
+        console.log(err);
       });
 }
 
@@ -53,7 +56,6 @@ function updateDB(item, count) {
           console.log('Thank your for shopping with us at Bamazon!');
         });
     }
-    connection.end();
+     connection.end();
   });
 }
-mySystem();
